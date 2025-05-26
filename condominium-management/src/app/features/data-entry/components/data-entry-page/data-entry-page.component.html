@@ -1,0 +1,49 @@
+<div class="container mt-4">
+  <h2>Enter Monthly Usage Data</h2>
+  <form [formGroup]="dataEntryForm" (ngSubmit)="onSubmit()">
+    
+    <div class="mb-3">
+      <app-select-condominium 
+        [condominiums]="condominiums$ | async" 
+        (condominiumSelected)="dataEntryForm.get('condominiumId')?.setValue($event); dataEntryForm.get('houseId')?.setValue('')" 
+        formControlName="condominiumId">
+      </app-select-condominium>
+      <div *ngIf="dataEntryForm.get('condominiumId')?.invalid && dataEntryForm.get('condominiumId')?.touched" class="text-danger small">
+        Condominium selection is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <app-select-house 
+        [houses]="houses$ | async"
+        (houseSelected)="dataEntryForm.get('houseId')?.setValue($event)"
+        formControlName="houseId">
+      </app-select-house>
+      <div *ngIf="dataEntryForm.get('houseId')?.invalid && dataEntryForm.get('houseId')?.touched" class="text-danger small">
+        House selection is required.
+      </div>
+    </div>
+
+    <div class="mb-3 card card-body">
+      <app-usage-input [usageFormGroup]="usageDetailsFormGroup"></app-usage-input>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="dataEntryForm.invalid">Submit Usage Data</button>
+  </form>
+
+  <!-- Debugging form state -->
+  <!-- 
+  <hr class="my-4">
+  <h4>Form Value:</h4>
+  <pre>{{ dataEntryForm.value | json }}</pre>
+  <h4>Form Status:</h4>
+  <pre>{{ dataEntryForm.status | json }}</pre>
+  <h4>Condominium Control:</h4>
+  <pre>{{ dataEntryForm.get('condominiumId')?.value }} | {{ dataEntryForm.get('condominiumId')?.status }}</pre>
+  <h4>House Control:</h4>
+  <pre>{{ dataEntryForm.get('houseId')?.value }} | {{ dataEntryForm.get('houseId')?.status }} | Enabled: {{ dataEntryForm.get('houseId')?.enabled }}</pre>
+  <h4>Usage Details Status:</h4>
+  <pre>{{ usageDetailsFormGroup.status | json }}</pre>
+  <pre>{{ usageDetailsFormGroup.value | json }}</pre>
+  -->
+</div>

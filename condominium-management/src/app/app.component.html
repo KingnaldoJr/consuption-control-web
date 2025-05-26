@@ -1,0 +1,17 @@
+<header class="app-header">
+  <h1>Condominium Management</h1>
+  <nav class="main-nav">
+    <ul>
+      <li><a routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a></li>
+      <li><a routerLink="/data-entry" routerLinkActive="active-link">Add New Usage Data</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="container app-main-content mt-4"> <!-- Added app-main-content for potential global styling -->
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="app-footer mt-4 text-center">
+  <p>&copy; {{ currentYear }} Condominium Management App</p>
+</footer>

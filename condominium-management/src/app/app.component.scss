@@ -1,0 +1,57 @@
+/* Global styles for AppComponent */
+
+.app-header {
+  background-color: #3f51b5; /* Example: Indigo */
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.main-nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.main-nav li a {
+  text-decoration: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.main-nav li a:hover,
+.main-nav li a.active-link { /* Style for active link */
+  background-color: #303f9f; /* Darker shade of indigo */
+}
+
+.app-main-content {
+  padding-bottom: 80px; /* Ensure footer doesn't overlap content, increased padding */
+  flex-grow: 1; /* Allows main content to grow and push footer down */
+}
+
+/* Sticky Footer Setup */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-footer {
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 1rem;
+  text-align: center; /* Center text in footer */
+  border-top: 1px solid #ddd;
+  margin-top: auto; /* Pushes footer to bottom if content is short */
+}

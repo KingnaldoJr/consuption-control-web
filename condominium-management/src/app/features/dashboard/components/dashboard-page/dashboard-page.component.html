@@ -1,0 +1,41 @@
+<div class="container mt-4">
+  <header class="mb-4">
+    <h2>Dashboard - Usage Overview</h2>
+  </header>
+
+  <section class="summary-cards mb-4">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <app-usage-summary-card
+          title="Total Water Usage"
+          [value]="(totalWaterUsage$ | async) ?? undefined"
+          unit="m³"
+          period="Overall"
+        ></app-usage-summary-card>
+      </div>
+      <div class="col-md-4 mb-3">
+        <app-usage-summary-card
+          title="Total Energy Usage"
+          [value]="(totalEnergyUsage$ | async) ?? undefined"
+          unit="kWh"
+          period="Overall"
+        ></app-usage-summary-card>
+      </div>
+      <div class="col-md-4 mb-3">
+        <app-usage-summary-card
+          title="Total Gas Usage"
+          [value]="(totalGasUsage$ | async) ?? undefined"
+          unit="m³" 
+          period="Overall"
+        ></app-usage-summary-card>
+      </div>
+    </div>
+  </section>
+
+  <section class="usage-list">
+    <app-usage-list 
+      [records]="allUsageRecords$ | async"
+      title="All Usage Records">
+    </app-usage-list>
+  </section>
+</div>
