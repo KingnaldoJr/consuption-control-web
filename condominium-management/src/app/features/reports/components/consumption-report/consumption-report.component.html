@@ -1,0 +1,119 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h1>Consumption Reports</h1>
+    </div>
+    <div class="card-body">
+      <form class="report-filters">
+        <div class="row mb-3">
+          <div class="col-md-6 form-group">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate" class="form-control" [(ngModel)]="startDate">
+          </div>
+          <div class="col-md-6 form-group">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate" class="form-control" [(ngModel)]="endDate">
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6 form-group">
+            <label for="condoSelector">Condominium:</label>
+            <select id="condoSelector" name="condoSelector" class="form-select" [(ngModel)]="selectedCondominium">
+              <option value="">Select Condominium</option>
+              <!-- Options will be populated dynamically -->
+            </select>
+          </div>
+          <div class="col-md-6 form-group">
+            <label for="houseSelector">House (Optional):</label>
+            <select id="houseSelector" name="houseSelector" class="form-select" [(ngModel)]="selectedHouse">
+              <option value="">Select House</option>
+              <!-- Options will be populated dynamically -->
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <div>Report Type:</div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="summaryReport" name="reportType" value="summary" [(ngModel)]="reportType">
+            <label class="form-check-label" for="summaryReport">Summary</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="detailedReport" name="reportType" value="detailed" [(ngModel)]="reportType">
+            <label class="form-check-label" for="detailedReport">Detailed</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="comparativeReport" name="reportType" value="comparative" [(ngModel)]="reportType">
+            <label class="form-check-label" for="comparativeReport">Comparative</label>
+          </div>
+        </div>
+
+        <div class="form-group text-center mb-4">
+          <button type="button" class="btn btn-primary" (click)="generateReport()">Generate Report</button>
+        </div>
+      </form>
+
+      <hr class="mb-4">
+
+      <div id="reportDisplayArea" class="mt-4 p-3 border bg-light" style="min-height: 200px;">
+        <div *ngIf="!reportGenerated">
+          <p>Please select your filters and click "Generate Report" to view data.</p>
+        </div>
+        <div *ngIf="reportGenerated && !hasData">
+          <p>No data found for the selected criteria.</p>
+        </div>
+
+        <div *ngIf="reportGenerated && hasData">
+          <!-- Summary Report Placeholder -->
+          <div *ngIf="reportType === 'summary'">
+            <h4>Report Summary</h4>
+            <p>Total Consumption: <strong>{{ summaryData.totalConsumption }} units</strong></p>
+            <p>Average Consumption per House: <strong>{{ summaryData.averageConsumption }} units</strong></p>
+            <!-- Add more summary placeholders as needed -->
+          </div>
+
+          <!-- Detailed Report Placeholder -->
+          <div *ngIf="reportType === 'detailed'">
+            <h4>Detailed Consumption Report</h4>
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>House/Unit Number</th>
+                  <th>Previous Reading</th>
+                  <th>Current Reading</th>
+                  <th>Consumption</th>
+                  <th>Date of Reading</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of detailedData">
+                  <td>{{ item.houseUnit }}</td>
+                  <td>{{ item.prevReading }}</td>
+                  <td>{{ item.currReading }}</td>
+                  <td>{{ item.consumption }}</td>
+                  <td>{{ item.readDate }}</td>
+                </tr>
+                <tr *ngIf="detailedData.length === 0">
+                  <td colspan="5" class="text-center">No detailed records to display.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Comparative Report Placeholder -->
+          <div *ngIf="reportType === 'comparative'">
+            <h4>Comparative Report</h4>
+            <p><em>[Placeholder for comparative charts or data]</em></p>
+            <p>Comparison data for selected condominiums/houses will be shown here, possibly using charts.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer text-end">
+      <button type="button" class="btn btn-secondary me-2" (click)="exportReport()">Export</button>
+      <button type="button" class="btn btn-info" (click)="printReport()">Print</button>
+    </div>
+  </div>
+</div>
